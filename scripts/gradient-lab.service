@@ -1,0 +1,19 @@
+[Unit]
+Description=Gradient Linux JupyterHub (gradient-lab)
+Documentation=https://docs.gradientlinux.io/lab
+After=concave-serve.service gradient-resolver.service
+Requires=concave-serve.service
+
+[Service]
+Type=simple
+User=gradient-svc
+Group=gradient-svc
+WorkingDirectory=/etc/gradient
+ExecStart=/usr/bin/jupyterhub --config /etc/gradient/jupyterhub_config.py
+Restart=on-failure
+RestartSec=10s
+ReadWritePaths=/var/lib/gradient /home
+
+[Install]
+WantedBy=multi-user.target
+

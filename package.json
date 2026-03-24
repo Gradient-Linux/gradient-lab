@@ -1,0 +1,12 @@
+{
+  "name": "gradient-lab-frontend-scaffold",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Minimal frontend scaffold for Gradient Lab phase 14",
+  "license": "UNLICENSED",
+  "exports": {
+    "./src/index": "./src/index.ts"
+  }
+}
+

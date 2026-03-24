@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gradient-lab"
+version = "0.1.0"
+description = "Thin JupyterHub wrapper for Gradient Linux notebook sessions"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "jupyterhub>=4.0",
+  "jupyterlab>=4.0",
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest>=8.0",
+]
+
+[tool.setuptools]
+packages = ["gradient_lab"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+

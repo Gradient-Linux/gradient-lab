@@ -1,0 +1,4 @@
+jupyterhub>=4.0
+jupyterlab>=4.0
+pytest>=8.0
+
