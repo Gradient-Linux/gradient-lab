@@ -1,15 +1,18 @@
-# Documentation Index
+# gradient-lab docs
 
-## Current Docs
+This directory tracks the public repository documentation for `gradient-lab`.
 
-- `../README.md` - repository overview and quick start
-- `../CONTRIBUTING.md` - contribution and code style notes
-- `../jupyterhub_config.py` - JupyterHub configuration entrypoint
-- `../scripts/gradient-lab.service` - systemd unit for deployment
+## Start here
 
-## Planned Docs
+- [README.md](../README.md) explains the notebook-layer boundary, local setup, and runtime defaults.
+- [CONTRIBUTING.md](../CONTRIBUTING.md) covers build, test, and review expectations.
 
-- Phase 14 architecture notes
-- sidebar extension behavior
-- deployment and service wiring details
+## Runtime contract
 
+- Hub bind address: `127.0.0.1:8889`
+- Notebook root template: `/gradient/notebooks/{username}`
+- Spawner class: `gradient_lab.spawner.GradientSpawner`
+
+## Scope
+
+`gradient-lab` wires JupyterHub into the Gradient Linux control plane. It does not own quota policy, suite lifecycle, or environment resolution.
