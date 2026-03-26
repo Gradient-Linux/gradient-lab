@@ -1,0 +1,26 @@
+{
+  "name": "@gradient-linux/gradient-lab-extension",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Gradient Lab JupyterLab sidebar extension",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run check"
+  },
+  "dependencies": {
+    "@jupyterlab/application": "^4.2.0",
+    "@jupyterlab/apputils": "^4.2.0",
+    "@jupyterlab/coreutils": "^6.2.0",
+    "@lumino/widgets": "^2.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  },
+  "jupyterlab": {
+    "extension": true,
+    "outputDir": "dist"
+  }
+}

@@ -4,7 +4,7 @@ Notebook and collaboration wiring for Gradient Linux, built on top of JupyterHub
 
 ## What it does
 
-`gradient-lab` keeps the notebook tier thin. It configures JupyterHub for Gradient Linux accounts, injects team metadata into spawned notebook sessions, and leaves infrastructure authority with `concave`, `concave-resolver`, and the compute layer. The repository currently includes a Python package for JupyterHub wiring, a custom spawner, service files, and a minimal frontend scaffold.
+`gradient-lab` keeps the notebook tier thin. It configures JupyterHub for Gradient Linux accounts, injects team metadata into spawned notebook sessions, and leaves infrastructure authority with `concave`, `concave-resolver`, and the compute layer. The repository currently includes a Python package for JupyterHub wiring, a custom spawner, a notebook-server status hook, service files, and a JupyterLab sidebar package.
 
 ## Requirements
 
@@ -12,7 +12,7 @@ Notebook and collaboration wiring for Gradient Linux, built on top of JupyterHub
 - Python 3.11+
 - JupyterHub 4+
 - JupyterLab 4+
-- Node.js 20+ for the frontend scaffold
+- Node.js 20+ for the frontend extension
 
 ## Install
 
@@ -22,6 +22,7 @@ Notebook and collaboration wiring for Gradient Linux, built on top of JupyterHub
 python3 -m venv .venv
 . .venv/bin/activate
 pip install -e ".[test]"
+npm install --prefix extension
 ```
 
 ## Usage
@@ -32,30 +33,31 @@ Run the repository-local JupyterHub wrapper from source:
 jupyterhub --config jupyterhub_config.py
 ```
 
-The notebook root is `/gradient/notebooks/{username}`. Team metadata is requested from `concave` during spawn.
+The notebook root is `~/gradient/notebooks/{username}`. Team metadata is requested from `concave` during spawn and exported into the notebook server for the sidebar extension.
 
 ## Configuration
 
 Repository-local JupyterHub settings live in [`gradient_lab/config.py`](gradient_lab/config.py). The current defaults include:
 
 - Hub bind address: `127.0.0.1:8889`
-- Notebook root template: `/gradient/notebooks/{username}`
+- Notebook root template: `~/gradient/notebooks/{username}`
 - PAM authentication
 - `gradient_lab.spawner.GradientSpawner` as the active spawner
+- `gradient_lab.server` as the notebook-server status extension
 
 ## Architecture
 
-`gradient-lab` is a thin integration layer. It does not replace upstream JupyterHub and it does not own quota policy, Docker orchestration, or environment resolution. It reads team and quota metadata from `concave`, adds that metadata to spawned notebook sessions, and keeps the collaboration surface downstream of the core control plane.
+`gradient-lab` is a thin integration layer. It does not replace upstream JupyterHub and it does not own quota policy, Docker orchestration, or environment resolution. It reads team and quota metadata from `concave`, adds that metadata to spawned notebook sessions, keeps the collaboration surface downstream of the core control plane, and exposes current status to the browser extension.
 
 ## Development
 
 ### Prerequisites
 
-Install Python 3.11 or newer. Install Node.js only if you need to work on the frontend scaffold.
+Install Python 3.11 or newer. Install Node.js only if you need to work on the frontend extension.
 
 ### Build
 
-The Python package is editable-install based. The frontend scaffold does not publish a separate build artifact yet.
+The Python package is editable-install based. The frontend extension is built from `extension/`.
 
 ```bash
 python3 -m venv .venv
@@ -74,9 +76,11 @@ python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```text
 gradient-lab/
   gradient_lab/       JupyterHub config and custom spawner
+  extension/          JupyterLab sidebar package
   tests/              unit tests
-  src/                frontend scaffold
-  scripts/            systemd unit file
+  src/                legacy frontend scaffold / compatibility helpers
+  scripts/            systemd unit file and install helper
+  jupyter_server_config.py
   jupyterhub_config.py
 ```
 

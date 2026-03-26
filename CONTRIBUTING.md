@@ -16,10 +16,12 @@ cd gradient-lab
 python3 -m venv .venv
 . .venv/bin/activate
 pip install -e ".[test]"
+npm install --prefix extension
 python3 -m unittest discover -s tests -p 'test_*.py' -v
+npm test
 ```
 
-If you need to work on the frontend scaffold, install Node.js 20 or newer. The scaffold is present in `src/`, but it does not publish a production build pipeline yet.
+If you need to work on the frontend extension, install Node.js 20 or newer. The canonical browser package lives in `extension/`.
 
 ## Making changes
 
@@ -56,6 +58,7 @@ Examples:
 
 - Add or update tests for any new function or behavior change.
 - Run `python3 -m unittest discover -s tests -p 'test_*.py' -v` before opening a pull request.
+- Run `npm test` after changing the JupyterLab extension package.
 - Keep subprocess calls isolated and easy to replace in tests.
 
 ### Pull requests
@@ -68,7 +71,7 @@ Examples:
 
 - Keep `gradient-lab` as a thin wrapper around upstream JupyterHub.
 - Do not fork JupyterHub behavior into large local subsystems.
-- Preserve `/gradient/notebooks/{username}` as the notebook root template unless there is a documented migration plan.
+- Preserve `~/gradient/notebooks/{username}` as the notebook root template unless there is a documented migration plan.
 - Keep calls into `concave` explicit and easy to mock.
 - Use separate command arguments instead of shell interpolation.
 

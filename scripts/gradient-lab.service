@@ -9,6 +9,9 @@ Type=simple
 User=gradient-svc
 Group=gradient-svc
 WorkingDirectory=/etc/gradient
+Environment=JUPYTER_CONFIG_DIR=/etc/gradient
+Environment=GRADIENT_LAB_SERVICE=gradient-lab
+Environment=GRADIENT_LAB_BRAND=Gradient Lab
 ExecStart=/usr/bin/jupyterhub --config /etc/gradient/jupyterhub_config.py
 Restart=on-failure
 RestartSec=10s
@@ -16,4 +19,3 @@ ReadWritePaths=/var/lib/gradient /home
 
 [Install]
 WantedBy=multi-user.target
-

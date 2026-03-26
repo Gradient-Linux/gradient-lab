@@ -1,12 +1,19 @@
 {
-  "name": "gradient-lab-frontend-scaffold",
+  "name": "gradient-lab-workspace",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Minimal frontend scaffold for Gradient Lab phase 14",
+  "description": "Gradient Lab notebook wrapper and JupyterLab extension workspace",
   "license": "UNLICENSED",
+  "workspaces": [
+    "extension"
+  ],
+  "scripts": {
+    "build": "npm --prefix extension run build",
+    "check": "npm --prefix extension run check",
+    "test": "npm --prefix extension run test"
+  },
   "exports": {
     "./src/index": "./src/index.ts"
   }
 }
-

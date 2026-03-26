@@ -1,1 +1,5 @@
 AGENTS.override.md
+__pycache__/
+*.pyc
+extension/node_modules/
+extension/dist/
